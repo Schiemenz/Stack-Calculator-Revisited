@@ -1,8 +1,12 @@
 A simple Stack Calculator
 written by F.Schiemenz
 
+TODO
+- Dynamic Dependency Injection
+
 INFO
 - complete Eclipse project
 - written in Java
+- featuring Apache Maven
+- featuring Reflections
 - featuring JUnit
-- Apache Maven

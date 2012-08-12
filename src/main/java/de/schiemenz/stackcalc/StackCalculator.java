@@ -19,12 +19,19 @@ import de.schiemenz.stackcalc.math.StackAddition;
 import de.schiemenz.stackcalc.math.StackArithmeticMean;
 import de.schiemenz.stackcalc.math.StackDivision;
 import de.schiemenz.stackcalc.math.StackMultiplication;
+import de.schiemenz.stackcalc.math.StackPi;
 import de.schiemenz.stackcalc.math.StackPower;
 import de.schiemenz.stackcalc.math.StackSquare;
 import de.schiemenz.stackcalc.math.StackSquareRoot;
 import de.schiemenz.stackcalc.math.StackSubtraction;
 import de.schiemenz.stackcalc.math.StackSummation;
 
+/**
+ * 
+ * @author Frank Schiemenz
+ *
+ */
+@SuppressWarnings("unchecked")
 public class StackCalculator {
 
     private static Stack<Double> m_stack = new Stack<Double>();
@@ -63,24 +70,19 @@ public class StackCalculator {
     /**
      * Parses user input and makes use of the stack operators accordingly
      */
-    @SuppressWarnings("unchecked")
     public static void processInput(String input) {
 
 	if (m_operators.containsKey(input)) {
+
 	    Stack<Double> tmp = (Stack<Double>) m_stack.clone();
 
 	    try {
 		m_stack = m_operators.get(input).getResult(m_stack);
 
-	    } catch (StackOperationException e) { // testing the @expects
-						  // annotation in jUnit -
-						  // change to 'Exception' if
-						  // needed
-		/*
-		 * System.out.println("Operand '" +
-		 * m_operators.get(input).toString() + "' threw exception: " +
-		 * e);
-		 */
+	    } catch (StackOperationException e) {
+
+		// e.printStackTrace();
+
 		m_stack = tmp;
 	    }
 	} else {
@@ -97,9 +99,10 @@ public class StackCalculator {
     }
 
     /**
-     * DEPRICATED Registers the mathematical functions - can be used to include
-     * external stack operators.
+     * Registers the mathematical functions - can be used to include external
+     * stack operators.
      */
+    @Deprecated
     public static void registerOperators() {
 	m_operators.put(new StackAddition().toString(), new StackAddition());
 	m_operators.put(new StackSubtraction().toString(), new StackSubtraction());
@@ -110,6 +113,7 @@ public class StackCalculator {
 	m_operators.put(new StackSquareRoot().toString(), new StackSquareRoot());
 	m_operators.put(new StackSummation().toString(), new StackSummation());
 	m_operators.put(new StackArithmeticMean().toString(), new StackArithmeticMean());
+	m_operators.put(new StackPi().toString(), new StackPi());
     }
 
     /**
@@ -161,8 +165,8 @@ public class StackCalculator {
 		// op.newInstance().getClass().getAnnotation(Operation.class);
 
 		// System.out.println("Found operator '" +
-		// op.newInstance().toString() + "' from " +
-		// op.getAnnotation(Operation.class).author() );
+		// op.newInstance().toString() + "' from "
+		// + op.getAnnotation(Operation.class).author());
 
 	    }
 	} catch (InstantiationException ie) {
